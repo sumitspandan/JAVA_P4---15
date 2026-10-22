@@ -1,0 +1,96 @@
+<!-- login.jsp -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
+<html>
+  <head>
+    <title>Student Portal Login</title>
+  </head>
+  <body>
+    <h2>Student Portal Login</h2>
+    <form action="login.jsp" method="post">
+      Username: <input type="text" name="username" required /><br /><br />
+      Password: <input type="password" name="password" required /><br /><br />
+      <input type="submit" value="Login" />
+    </form>
+    <% String username = request.getParameter("username"); String password =
+    request.getParameter("password"); if (username != null && password != null)
+    { if (username.equals("student1") && password.equals("pass123")) {
+    session.setAttribute("username", username);
+    response.sendRedirect("home.jsp"); } else { out.println("
+    <p style="color: red">Invalid Username or Password.</p>
+    "); } } %>
+  </body>
+</html>
+<!-- home.jsp -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> <% String user
+= (String) session.getAttribute("username"); if (user == null) {
+response.sendRedirect("login.jsp"); return; } %>
+<!doctype html>
+<html>
+  <head>
+    <title>Student Home</title>
+  </head>
+  <body>
+    <h2>Welcome, <%= user %>!</h2>
+    <ul>
+      <li><a href="profile.jsp">Home/Profile</a></li>
+      <li><a href="attendance.jsp">View Attendance and Marks</a></li>
+      <li><a href="logout.jsp">Logout</a></li>
+    </ul>
+  </body>
+</html>
+<!-- profile.jsp -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> <% String user
+= (String) session.getAttribute("username"); if (user == null) {
+response.sendRedirect("login.jsp"); return; } %>
+<!doctype html>
+<html>
+  <head>
+    <title>Student Profile</title>
+  </head>
+  <body>
+    <h2>Student Profile</h2>
+    <p>Name: Student One</p>
+    <p>Roll Number: 101</p>
+    <p>Department: CSE</p>
+    <p>Semester: 3</p>
+    <a href="home.jsp">Back to Home</a>
+  </body>
+</html>
+<!-- attendance.jsp -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> <% String user
+= (String) session.getAttribute("username"); if (user == null) {
+response.sendRedirect("login.jsp"); return; } %>
+<!doctype html>
+<html>
+  <head>
+    <title>Attendance and Marks</title>
+  </head>
+  <body>
+    <h2>Attendance and Marks</h2>
+    <p>Attendance: 92%</p>
+    <p>Subject-wise Marks:</p>
+    <ul>
+      <li>Java: 88</li>
+      <li>Database Management: 85</li>
+      <li>Data Structures: 90</li>
+    </ul>
+    <a href="home.jsp">Back to Home</a>
+  </body>
+</html>
+<!-- logout.jsp -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> <%
+session.invalidate(); response.sendRedirect("login.jsp"); %>
+<!-- SAMPLE INPUT -->
+Username: student1 Password: pass123
+<!-- SAMPLE OUTPUT -->
+Student Portal Login Login successful; redirected to Student Home. Student Home:
+Welcome, student1! Home/Profile | View Attendance and Marks | Logout Student
+Profile: Name: Student One Roll Number: 101 Department: CSE Semester: 3
+Attendance and Marks: Attendance: 92% Java: 88 Database Management: 85 Data
+Structures: 90 Invalid login: Invalid Username or Password. After logout: The
+session is invalidated and the user is redirected to login.jsp. Accessing
+secured pages without login redirects to login.jsp. NOTE: Save each section as
+its own JSP file using the filename shown above. Deploy the files in a web
+application on Apache Tomcat. This is a simple practicum demonstration; use a
+database and hashed passwords for real applications.
